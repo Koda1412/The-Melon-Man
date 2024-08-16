@@ -31,7 +31,7 @@ var game = {
 		this.canvas.height = this.options.canvasHeight
 		this.context.imageSmoothingEnabled = false
 
-    this.backgrounds['sky'].image.src = "background.png"
+    this.backgrounds['sky'].image.src = "background.jpg"
 		this.backgrounds['trees'].image.src = "trees.png"
 
 		for (var key in this.backgrounds) {

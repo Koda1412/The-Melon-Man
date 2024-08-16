@@ -126,7 +126,7 @@ game.drawTitle = function () {
 	game.context.textAlign = "center"
 	game.context.fillStyle = "black"
 	game.context.fillText("THE ORANGE MAN, CAN U REACH THE MOON ?", game.canvas.width / 2, game.canvas.height / 2)
-	game.context.font = "15px Georgia"
+	game.context.font = "15px superscript"
 	game.context.fillText("Press A, D to move and SPACE to jump, START?", game.canvas.width / 2, game.canvas.height / 2 + 50)
 }
 
