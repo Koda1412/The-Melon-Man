@@ -37,7 +37,6 @@ game.drawPlayer = function () {
 }
 
 game.redraw = function () {
-	game.drawPending = false
 
 	// Draw the background
 	if (game.backgrounds['sky'].loaded) {
@@ -132,9 +131,8 @@ game.drawTitle = function () {
 }
 
 game.requestRedraw = function () {
-	if (!game.drawPending && !game.isOver) {
-		game.drawPending = true
-		requestAnimationFrame(game.redraw)
+	if (!game.isOver) {
+		game.redraw();
 	}
 
 	if (game.isOver) {
@@ -145,8 +143,6 @@ game.requestRedraw = function () {
 		game.context.textAlign = "center"
 		game.context.fillStyle = "black"
 		game.context.fillText("Game over!", game.canvas.width / 2, game.canvas.height / 2)
-		game.context.font = "15px Georgia"
-		game.context.fillText("(Refresh the page to restart)", game.canvas.width / 2, game.canvas.height / 2 + 50)
 		game.context.fillText(`${game.points} points in ${Math.floor(game.timer.timer / 1000)} s`, game.canvas.width / 2, game.canvas.height / 2 + 25)
 		game.context.font = "15px Georgia"
 		game.context.fillText("Press SPACE to restart", game.canvas.width / 2, game.canvas.height / 2 + 50)
@@ -168,5 +164,8 @@ game.restart = function () {
 	game.timer.updateDisplay()
 
 	game.generateMap()
+}
+game.loop = function () {
 	game.requestRedraw()
+	requestAnimationFrame(game.loop)
 }

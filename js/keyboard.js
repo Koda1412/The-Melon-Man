@@ -12,7 +12,6 @@ game.moveLeft = function () {
 				} else {
 					game.player.x -= 0.1
 				}
-				game.requestRedraw()
 				if (!game.checkCollisions()) {
 					// Player should fall
 					game.player.jump("fall")
@@ -35,7 +34,6 @@ game.moveRight = function () {
 				} else {
 					game.player.x += 0.1
 				}
-				game.requestRedraw()
 				if (!game.checkCollisions()) {
 					game.player.jump("fall")
 				}

@@ -6,31 +6,36 @@ game.player = {
 		direction: "left",
 		isInAir: false,
 		startedJump: false,
-		doubleJump:false,
+		numberOfAllowedJump: 3,
+	    fallTimeoutId: null,
 		moveInterval: null,
 		fallTimeout: function(startingY, time, maxHeight) {
-			setTimeout( function () {
-				if (this.isInAir) {
-					this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
-					if (this.y < this.highestY) {
-						this.highestY = this.y
-					}
-					if (time > 37) {
-						this.startedJump = false
-						game.checkCollisions()
-					}
-					if (time < 150) {
-						time++
-						this.fallTimeout(startingY, time, maxHeight)
-					} else {
-						game.isOver = true
-					}
-					if (this.y > 40) {
-						game.isOver = true
-					}
-					game.requestRedraw()
+			console.log("IsInAir:", this.isInAir, "AllowedJumps:", this.numberOfAllowedJump);
+		console.log("StartingY:", startingY, "Time:", time, "MaxHeight:", maxHeight);
+		if (this.fallTimeoutId) clearTimeout(this.fallTimeoutId)
+		this.fallTimeoutId = setTimeout(function () {
+			if (this.isInAir) {
+				this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
+				if (this.y < this.highestY) {
+					this.highestY = this.y
 				}
-			}.bind(this, startingY, time, maxHeight), 12)
+				if (time > 37) {
+					this.startedJump = false
+					game.checkCollisions()
+				}
+				if (time < 150) {
+					time++
+					this.fallTimeout(startingY, time, maxHeight)
+				} else {
+					game.isOver = true
+				}
+				if (this.y > 40) {
+					game.isOver = true
+				}
+			} else {
+				this.numberOfAllowedJump = 3
+			}
+		}.bind(this, startingY, time, maxHeight), 12)
 		},
 		animationFrameNumber: 0,
 		collidesWithGround: true,
@@ -45,19 +50,29 @@ game.player = {
 			var time = 1;
 			var maxHeight = 121;
 			if (type == "fall") {
-				time = 30;
-				maxHeight = 0;
+				if (!this.isInAir) {
+					time = 30;
+					maxHeight = 0;
+					this.isInAir = true;
+					this.fallTimeout(startingY, time, maxHeight);
+				}
+				return;
 			}
 			if (!this.isInAir) {
 				this.initiateJump(startingY, time, maxHeight)
-			    this.doubleJump = true
+			} else {
+				if (this.numberOfAllowedJump > 0) {
+					this.initiateJump(startingY, time, Math.round(maxHeight))
+				}
 			}
+			
 		},
 		initiateJump: function (startingY, time, maxHeight) {
-			clearInterval(this.fallInterval);
+			clearInterval(this.fallTimeoutId);
 			game.sounds.jump.play();
 			this.startedJump = true;
 			this.isInAir = true;
+			this.numberOfAllowedJump -= 1;
 			this.fallTimeout(startingY, time, maxHeight);
 		}
 	}
