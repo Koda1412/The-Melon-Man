@@ -6,7 +6,7 @@ game.player = {
 		direction: "left",
 		isInAir: false,
 		startedJump: false,
-		numberOfAllowedJump: 3,
+		numberOfAllowedJump: 2,
 	    fallTimeoutId: null,
 		moveInterval: null,
 		fallTimeout: function(startingY, time, maxHeight) {

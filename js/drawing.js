@@ -79,7 +79,7 @@ game.redraw = function () {
 	game.drawPlayer()
 
 	game.points = Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12;
-	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + game.points;
+	game.counter.innerHTML = "A game by Karol Swierczek modify by Koda14 | Controls: A, D / arrows and SPACE | Points: " + game.points;
 }
 
 game.timer = {
@@ -127,7 +127,7 @@ game.drawTitle = function () {
 	game.context.fillStyle = "black"
 	game.context.fillText("START!!", game.canvas.width / 2, game.canvas.height / 2)
 	game.context.font = "15px Georgia"
-	game.context.fillText("Press A, D or SPACE to start the game!!", game.canvas.width / 2, game.canvas.height / 2 + 50)
+	game.context.fillText("Press A, D to move and SPACE to jump, START?", game.canvas.width / 2, game.canvas.height / 2 + 50)
 }
 
 game.requestRedraw = function () {
