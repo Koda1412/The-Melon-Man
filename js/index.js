@@ -16,7 +16,7 @@ var game = {
 			}
 	},
 	sounds: {
-		jump: new Audio('sounds/jump.wav')
+		jump: new Audio('sounds/sound.mp3')
 	},
 	options: {
 		texturesPath: "textures.png",
