@@ -147,7 +147,26 @@ game.requestRedraw = function () {
 		game.context.fillText("Game over!", game.canvas.width / 2, game.canvas.height / 2)
 		game.context.font = "15px Georgia"
 		game.context.fillText("(Refresh the page to restart)", game.canvas.width / 2, game.canvas.height / 2 + 50)
-		game.context.fillText(`YOU GOT ${game.points} POINTS IN ${Math.floor(game.timer.timer / 1000)} SECONDS`, game.canvas.width / 2, game.canvas.height / 2 + 50)
-		console.log("Game over!", game)
+		game.context.fillText(`${game.points} points in ${Math.floor(game.timer.timer / 1000)} s`, game.canvas.width / 2, game.canvas.height / 2 + 25)
+		game.context.font = "15px Georgia"
+		game.context.fillText("Press SPACE to restart", game.canvas.width / 2, game.canvas.height / 2 + 50)
 	}
+}
+game.restart = function () {
+	game.isOver = false
+	game.player.x = 54
+	game.player.y = 0
+	game.player.highestY = 0
+	game.player.direction = "right"
+	game.player.isInAir = false
+	game.player.animationFrameNumber = 0
+	game.player.collidesWithGround = true
+
+	// Reset timer
+	game.timer.timer = 0
+	game.timer.startTime = 0
+	game.timer.updateDisplay()
+
+	game.generateMap()
+	game.requestRedraw()
 }

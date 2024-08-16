@@ -24,6 +24,7 @@ game.structures = {
 }
 
 game.generateMap = function () {
+	this.map.structures = []
 	// Generate a platform for the player
 	this.map.structures.push({
 		name: "grassPlatform",

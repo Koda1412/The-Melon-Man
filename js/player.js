@@ -41,14 +41,14 @@ game.player = {
 		},
 		jump: function (type) {
 			if (!game.timer.isRunning && game.timer.timer === 0) game.timer.start();
+			var startingY = this.y;
+			var time = 1;
+			var maxHeight = 121;
+			if (type == "fall") {
+				time = 30;
+				maxHeight = 0;
+			}
 			if (!this.isInAir) {
-				var startingY = this.y
-				var time = 1
-				maxHeight = 121
-				if (type == "fall") {
-					time = 30
-					maxHeight = 0
-				}
 				this.initiateJump(startingY, time, maxHeight)
 			    this.doubleJump = true
 			}
