@@ -33,7 +33,7 @@ game.player = {
 					game.isOver = true
 				}
 			} else {
-				this.numberOfAllowedJump = 3
+				this.numberOfAllowedJump = 2
 			}
 		}.bind(this, startingY, time, maxHeight), 12)
 		},
