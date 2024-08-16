@@ -1,5 +1,6 @@
 // Functions responsible for keyboard events handling
 game.moveLeft = function () {
+	if (!game.timer.isRunning && game.timer.timer === 0) game.timer.start();
 	game.player.direction = "left"
 	game.clearMoveIntervals()
 	game.player.moveLeftInterval = setInterval(function () {
@@ -23,6 +24,7 @@ game.moveLeft = function () {
 }
 
 game.moveRight = function () {
+	if (!game.timer.isRunning && game.timer.timer === 0) game.timer.start();
 	game.player.direction = "right"
 	game.clearMoveIntervals()
 	game.player.moveRightInterval = setInterval(function () {

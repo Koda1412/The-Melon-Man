@@ -40,6 +40,7 @@ game.player = {
 			right: [{tileColumn: 9, tileRow: 0}, {tileColumn: 8, tileRow: 0}, {tileColumn: 9, tileRow: 0}, {tileColumn: 7, tileRow: 0}]
 		},
 		jump: function (type) {
+			if (!game.timer.isRunning && game.timer.timer === 0) game.timer.start();
 			if (!this.isInAir) {
 				var startingY = this.y
 				var time = 1

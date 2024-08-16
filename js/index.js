@@ -46,5 +46,6 @@ var game = {
 	map: {
 		structures: []
 	},
-	isOver: false
+	isOver: false,
+	points: 0
 }

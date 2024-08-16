@@ -55,6 +55,9 @@ game.redraw = function () {
 	}
 
 	// List nearest structures
+	if (!game.timer.isRunning && game.timer.timer === 0) {
+		game.drawTitle();
+	}
 	var structuresToDraw = []
 	var drawing_distance = 15
 	for (var i = 0; i < game.map.structures.length; i++) {
@@ -76,7 +79,56 @@ game.redraw = function () {
 	// Draw the player
 	game.drawPlayer()
 
-	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12
+	game.points = Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12;
+	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + game.points;
+}
+
+game.timer = {
+	timer: 0,
+	isRunning: false,
+	timerElement: document.getElementById('timer'),
+	startTime: 0,
+
+	start: function () {
+		if (!this.isRunning) {
+			this.timer = Date.now() - this.elapsedTime;
+			this.startTime = Date.now();
+			this.isRunning = true;
+			this.update();
+		}
+	},
+
+	stop: function () {
+		if (this.isRunning) {
+			this.isRunning = false;
+			this.timer = Date.now() - this.startTime;
+		}
+	},
+
+	update: function () {
+		if (this.isRunning) {
+			this.timer = Date.now() - this.startTime;
+			this.updateDisplay();
+			requestAnimationFrame(this.update.bind(this));
+		}
+	},
+
+	updateDisplay: function () {
+		const seconds = Math.floor(this.timer / 1000);
+		this.timerElement.innerHTML = `Time: ${seconds}s`;
+	}
+
+
+
+}
+
+game.drawTitle = function () {
+	game.context.font = "30px superscript"
+	game.context.textAlign = "center"
+	game.context.fillStyle = "black"
+	game.context.fillText("START!!", game.canvas.width / 2, game.canvas.height / 2)
+	game.context.font = "15px Georgia"
+	game.context.fillText("Press A, D or SPACE to start the game!!", game.canvas.width / 2, game.canvas.height / 2 + 50)
 }
 
 game.requestRedraw = function () {
@@ -85,13 +137,17 @@ game.requestRedraw = function () {
 		requestAnimationFrame(game.redraw)
 	}
 
-	if(game.isOver) {
+	if (game.isOver) {
 		clearInterval(this.player.fallInterval)
+		game.timer.stop()
+
 		game.context.font = "30px superscript"
 		game.context.textAlign = "center"
 		game.context.fillStyle = "black"
 		game.context.fillText("Game over!", game.canvas.width / 2, game.canvas.height / 2)
 		game.context.font = "15px Georgia"
 		game.context.fillText("(Refresh the page to restart)", game.canvas.width / 2, game.canvas.height / 2 + 50)
+		game.context.fillText(`YOU GOT ${game.points} POINTS IN ${Math.floor(game.timer.timer / 1000)} SECONDS`, game.canvas.width / 2, game.canvas.height / 2 + 50)
+		console.log("Game over!", game)
 	}
 }
