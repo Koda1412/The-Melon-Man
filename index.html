@@ -31,13 +31,12 @@
         game.options.canvasHeight = window.innerHeight / 3
         game.canvas.width = game.options.canvasWidth
         game.canvas.height = game.options.canvasHeight
-        game.requestRedraw()
       }
 
       game.init(function () {
       	game.generateMap()
-      	game.requestRedraw()
       })
+      game.loop()
     </script>
     <audio controls loop autoplay hidden>
       <source src="sounds/music.mp3" type="audio/mpeg">
